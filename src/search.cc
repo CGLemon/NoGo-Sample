@@ -270,16 +270,22 @@ void Search::dump_analysis() {
 
     std::ostringstream ss;
     m_root_node->sort_children();
-
-    int color = m_root_state.get_tomove();
     std::vector<Node*> children = m_root_node->get_children();
-    for (Node *n : children) {
+
+    int max_show_size = std::min((int)children.size(), 10);
+    int color = m_root_state.get_tomove();
+    for (int i = 0; i < max_show_size; ++i) {
+        Node *n = children[i];
         int visits = n->get_visits();
         if (visits > 0) {
             ss << vertex_to_str(n->get_vertex(), m_root_state) << " -> "
                    << "V(" << 100 * (n->get_eval(color)) << "%), "
                    << "N(" << visits << ")" << std::endl;
         }
+    }
+    int remaining_size = children.size() - max_show_size;
+    if (remaining_size > 0) {
+        ss << "......Fold the other " << remaining_size << " node(s) status." << std::endl;
     }
 
     ss << "Tree has "

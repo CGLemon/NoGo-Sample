@@ -13,6 +13,8 @@ void parse_args(int argc, char ** argv) {
             printf("-t, --threads: Number of search threads.\n");
             printf("-p, --playouts: Number of playouts per move.\n");
             printf("--main-time: The thinking time of a game.\n");
+            printf("--analysis: Show MCTS search status.\n");
+            printf("--no-hollow: Remove the hollow positions.\n");
             exit(0);
         }
 
@@ -24,6 +26,8 @@ void parse_args(int argc, char ** argv) {
             cfg_main_time = std::stoi(argv[++i]);
         } else if (val == "--analysis") {
             cfg_dump_analysis = true;
+        } else if (val == "--no-hollow") {
+            cfg_hollow_pos.clear();
         }
     }
 }

@@ -15,6 +15,4 @@ extern int cfg_main_time;
 extern FILE *cfg_search_file;
 extern std::vector<std::array<int, 2>> cfg_hollow_pos;
 
-
-
 #endif
