@@ -1,6 +1,7 @@
 #include <memory>
 #include <sstream>
 #include <iostream>
+#include <array>
 #include <vector>
 #include <algorithm>
 #include <cmath>
@@ -52,7 +53,10 @@ std::vector<std::string> GTP_COMMANDS_LIST = {
     "undo",
 
     // Part of GTP version 2 standard command
-    "final_score"
+    "final_score",
+
+    // Special command for hollow nogo
+    "hollow"
 };
 
 void gtp_prcoess(GameState *main_game, Search *search);
@@ -242,6 +246,32 @@ void gtp_prcoess(GameState *main_game, Search *search) {
             result << "w+" << -score;
         }
         std::cout << gtp_success(result.str());
+    } else if (main_cmd == "hollow") {
+        int bsize = main_game->get_board_size();
+        auto hollow_pos_buf = std::vector<std::array<int, 2>>{};
+        for (int i = 1; i < argc; ++i) {
+            auto vtx_str = args[i];
+            char start = 'A'; // 65
+            if (vtx_str[0] >= 'a') {
+                start = 'a'; // 97
+            }
+
+            int x = vtx_str[0] - start;
+            int y = std::stoi(vtx_str.substr(1)) - 1;
+            if (x >= 8) x--; // skip I
+            if (x >= bsize || y >= bsize) {
+                break;
+            };
+            hollow_pos_buf.emplace_back(std::array<int, 2>{x,y});
+        }
+        if (hollow_pos_buf.size() == argc - 1) {
+           cfg_hollow_pos = hollow_pos_buf;
+           main_game->clear_board(bsize, main_game->get_komi());
+           search->time_setting(cfg_main_time);
+           std::cout << gtp_success(std::string{});
+        } else {
+           std::cout << gtp_fail("vertex is not accepted");
+        }
     } else if (main_cmd == "help" ||
                    main_cmd == "list_commands") {
         auto list_commands = std::ostringstream{};

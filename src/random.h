@@ -20,11 +20,6 @@ public:
         return std::numeric_limits<result_type>::max();
     }
 
-    template<int Range>
-    int RandomFix() {
-        return (int)(*this)() % Range;
-    }
-
     virtual result_type operator()() = 0;
 };
 

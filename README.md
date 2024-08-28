@@ -1,14 +1,14 @@
 # NoGo-Sample
 
-為了交大電腦對局的最後的作業 Hollow NoGo 寫的範例。由於課堂的範例程式較為怪異，這裡再寫了一份給同學當參考。
+根據交大電腦對局的最後的作業 Hollow NoGo 寫的範例。
 
-## 程式碼部份
+## 甚麼是 Hollow NoGo？
 
-* 規則實做寫在 ```board.h/cc``` 和 ```game_state.h/cc``` 裡，由於規則實做由圍棋修改而成，有一些多餘的部份，例如 ```komi``` 、```ko``` 和 ```pass``` 等等
-* 基本設定寫在 ```config.h/cc```裡
-* GTP 界面實做寫在 ```gtp.h/cc```裡，可直接在任何 GTP 圖形界面使用，如 sabaki 和 GoGUI
-* MCTS 實做寫在 ```node.h/cc``` 和 ```search.h/cc``` 裡
-* 時間控制器實做寫在  ```time_manager.h/cc``` 裡
+Hollow NoGo 是一種 [NoGo](https://zh.wikipedia.org/zh-tw/%E4%B8%8D%E5%9C%8D%E6%A3%8B) 的變體，規則和 NoGo 相同，不同之處在於 Hollow NoGo 不是完整的正方形棋盤，棋盤上有些不規則的洞，雙方玩家要根據不同洞的位置選擇不同戰略，相比原本的 NoGo 具有更高的挑戰性。
+
+## 如何使用？
+
+推薦使用圍棋的圖形界面 [sabaki](https://sabaki.yichuanshen.de/) 加載編譯好的引擎，即可和引擎對戰，但需要注意 hollow 的部份不會顯示在棋盤。
 
 ## 實做特點
 
@@ -17,3 +17,7 @@
 * 可重複使用樹，以提搜索高效率
 * 較好的規則實做，經過對比，稍快於交大作業範例的 bitboard
 * 完整的時間控制器，可較好的利用剩餘時間
+
+## TODO
+
+* Rave MCTS

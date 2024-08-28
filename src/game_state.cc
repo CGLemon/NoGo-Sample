@@ -142,7 +142,8 @@ void GameState::showboard() {
                   << "Moves: " << m_movenum 
                   << "}"
                   << std::endl;
-    std::cerr << "Hash: " << std::hex << board.compute_hash() << std::endl;
+    std::cerr << "Hash: " << std::hex << std::uppercase
+                  << board.compute_hash() << std::dec << std::endl;
 }
 
 int GameState::get_state(int vtx) const {

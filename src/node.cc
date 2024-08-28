@@ -3,14 +3,12 @@
 #include <thread>
 #include <cassert>
 
-#include <iostream>
-
 #include "node.h"
 #include "board.h"
 #include "config.h"
 
 #define LOCK(M) \
-    std::lock_guard<std::mutex> lock(m_mtx);
+    std::lock_guard<std::mutex> lock(M);
 
 #define VIRTUAL_LOSS_COUNT (3)
 
@@ -99,7 +97,7 @@ double Node::get_eval(int color, bool use_virtual_loss) const {
         visits += get_virtual_loss();
     }
     double black_eval =
-        (double)m_black_wins.load(std::memory_order_relaxed)/get_visits();
+        (double)m_black_wins.load(std::memory_order_relaxed)/visits;
     if (color == Board::WHITE) {
         return 1. - black_eval;
     }

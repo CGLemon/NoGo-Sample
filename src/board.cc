@@ -43,10 +43,12 @@ void Board::reset_board(int board_size) {
     for (int i = 0; i < hollow_size; ++i) {
         int x = cfg_hollow_pos[i][0];
         int y = cfg_hollow_pos[i][1];
-        m_state[get_vertex(x,y)] = INVLD;
+        if (x < m_board_size && y < m_board_size) {
+            m_state[get_vertex(x,y)] = INVLD;
+        }
     }
 
-    m_passes = 0;
+    m_passes = 0; // unused
 }
 
 bool Board::legal_move(int vtx, int color) const {
@@ -336,14 +338,18 @@ std::string Board::to_string() const {
         ss << y+1 << ' ';
 
         for (int x = 0; x < m_board_size; ++x) {
-
-            int state = m_state[get_vertex(x,y)];
+            int vtx = get_vertex(x,y);
+            int state = m_state[vtx];
             if (state == BLACK) ss << 'x';
             else if (state == WHITE) ss << 'o';
             else if (state == EMPTY) ss << '.';
             else if (state == INVLD) ss << ' ';
 
-            ss << ' ';
+            if (vtx == m_last_move) {
+                ss << '<';
+            } else {
+                ss << ' ';
+            }
         }
         ss << '\n';
     }

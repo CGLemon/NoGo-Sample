@@ -112,7 +112,7 @@ int Search::think() {
         100 * m_root_node->get_eval(color),
         m_time_manager.get_time_left(color));
 
-    if (m_root_node->get_eval(color) < 0.2f) {
+    if (m_root_node->get_eval(color) < 0.2f && cfg_enable_resign) {
         fprintf(cfg_search_file, "The Win-rate looks bad. I will resign.\n");
         return Board::RESIGN;
     }
